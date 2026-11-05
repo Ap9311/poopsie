@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { MENU_ITEMS, MenuItem, PIZZA_TOPPINGS } from '../data/menuData';
-import { Search, DollarSign, Sparkles, PlusCircle, AlertTriangle, ChevronRight } from 'lucide-react';
+import { Search, DollarSign, Sparkles, PlusCircle, ChevronRight } from 'lucide-react';
 
 interface MenuSectionProps {
   onOpenCustomPizza: () => void;
+  isCompactView?: boolean;
+  onViewFullMenu?: () => void;
 }
 
-export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) => {
+export const MenuSection: React.FC<MenuSectionProps> = ({
+  onOpenCustomPizza,
+  isCompactView = false,
+  onViewFullMenu,
+}) => {
   const [activeTab, setActiveTab] = useState<'all' | 'pizza' | 'grille' | 'starters' | 'sides'>('pizza');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterFavorites, setFilterFavorites] = useState(false);
@@ -22,6 +28,8 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
     return matchesTab && matchesSearch && matchesFavorite;
   });
 
+  const displayedItems = isCompactView ? filteredItems.slice(0, 8) : filteredItems;
+
   return (
     <section id="menu" className="py-16 sm:py-24 bg-tavern-grain border-b border-[#E0D7C6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +42,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
             <span className="text-[#D97706] bg-[#2E2422] px-2 py-0.5 text-[10px]">CASH ONLY</span>
           </div>
           <h2 className="font-display text-3xl sm:text-5xl font-bold text-[#1C1514] border-double-tavern pb-3 inline-block">
-            Our Menu & Prices
+            {isCompactView ? 'Featured Menu Highlights' : 'Our Full Menu & Prices'}
           </h2>
           <p className="text-sm sm:text-base text-[#52443F]">
             10-inch, edge-to-edge, no border crust — that's South Shore style. Fresh dough baked daily in 54-year seasoned black steel pans.
@@ -52,7 +60,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                 IMPORTANT REMINDER: WE ARE CASH ONLY
               </h4>
               <p className="text-xs sm:text-sm text-[#F9E8D9]">
-                We do not take credit or debit cards. ATM is available inside the tavern right by the front door.
+                We do not accept credit or debit cards. ATM is available inside the tavern right by the entrance.
               </p>
             </div>
           </div>
@@ -78,7 +86,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                   : 'text-[#4A3E3B] hover:bg-[#E2D8C5]'
               }`}
             >
-              🍕 Bar Pizzas (10")
+              Bar Pizzas (10")
             </button>
             <button
               onClick={() => setActiveTab('grille')}
@@ -88,7 +96,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                   : 'text-[#4A3E3B] hover:bg-[#E2D8C5]'
               }`}
             >
-              🍔 Grille & Burgers
+              Grille & Burgers
             </button>
             <button
               onClick={() => setActiveTab('starters')}
@@ -98,7 +106,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                   : 'text-[#4A3E3B] hover:bg-[#E2D8C5]'
               }`}
             >
-              🍗 Starters & Salads
+              Starters & Salads
             </button>
             <button
               onClick={() => setActiveTab('sides')}
@@ -108,7 +116,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                   : 'text-[#4A3E3B] hover:bg-[#E2D8C5]'
               }`}
             >
-              🍟 Tavern Sides
+              Tavern Sides
             </button>
             <button
               onClick={() => setActiveTab('all')}
@@ -118,7 +126,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                   : 'text-[#4A3E3B] hover:bg-[#E2D8C5]'
               }`}
             >
-              Full Menu
+              Full List
             </button>
           </div>
 
@@ -129,7 +137,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7B75]" />
               <input
                 type="text"
-                placeholder="Search menu (e.g. Beauty, burger, wings)..."
+                placeholder="Search menu (e.g. Beauty, burger, reuben)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[#FFFDF7] border border-[#C8BCAB] pl-9 pr-4 py-2 text-xs sm:text-sm text-[#1C1514] placeholder-[#8C7B75] focus:outline-none focus:border-[#7A1C1C]"
@@ -150,7 +158,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
               </button>
               
               <span className="text-xs text-[#7A6B65]">
-                Showing {filteredItems.length} items
+                Showing {displayedItems.length} of {filteredItems.length} items
               </span>
             </div>
 
@@ -160,7 +168,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
 
         {/* Menu Items Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredItems.map((item) => (
+          {displayedItems.map((item) => (
             <div
               key={item.id}
               className={`p-5 bg-[#FFFDF7] border-2 transition-all shadow-sm relative flex flex-col justify-between ${
@@ -182,7 +190,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                     {item.name}
                   </h3>
                   <span className="font-display text-xl font-bold text-[#7A1C1C] shrink-0">
-                    ${item.price.toFixed(2)}
+                    {item.priceDisplay ? item.priceDisplay : `$${item.price.toFixed(2)}`}
                   </span>
                 </div>
 
@@ -209,7 +217,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                     onClick={onOpenCustomPizza}
                     className="text-[#7A1C1C] hover:text-[#962222] font-display font-bold uppercase text-xs flex items-center gap-0.5 ml-auto"
                   >
-                    <span>Order / Customize</span>
+                    <span>Customize Pie</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 )}
@@ -218,17 +226,30 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
           ))}
         </div>
 
+        {/* View Full Menu CTA for Compact Home View */}
+        {isCompactView && onViewFullMenu && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={onViewFullMenu}
+              className="bg-[#7A1C1C] hover:bg-[#962222] text-white px-8 py-3.5 font-display text-base font-bold uppercase tracking-wider shadow-md transition-colors inline-flex items-center gap-2"
+            >
+              <span>Explore Complete Menu (26 Items & Toppings)</span>
+              <ChevronRight className="w-4 h-4 text-[#D97706]" />
+            </button>
+          </div>
+        )}
+
         {/* Create Your Own 10" Bar Pizza Box */}
-        {(activeTab === 'pizza' || activeTab === 'all') && (
+        {!isCompactView && (activeTab === 'pizza' || activeTab === 'all') && (
           <div className="mt-12 p-6 sm:p-8 bg-[#1C1514] text-[#FBF8F1] border-2 border-[#7A1C1C] shadow-lg">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               
               <div className="lg:col-span-8 space-y-3">
                 <div className="text-xs font-bold uppercase tracking-widest text-[#D97706]">
-                  Build Your Own 10" Bar Pizza • Base Cheese $9.75
+                  Build Your Own 10" Bar Pizza • Base Cheese $7.50
                 </div>
                 <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#FBF8F1]">
-                  Available Toppings ($1.25 Each)
+                  Available Toppings
                 </h3>
                 <p className="text-xs sm:text-sm text-[#C5BBAA]">
                   All pizzas are baked edge-to-edge in seasoned 10-inch pans. Add as many toppings as you like!
@@ -237,9 +258,9 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ onOpenCustomPizza }) =
                 {/* Toppings Grid */}
                 <div className="pt-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 text-xs text-[#E8E0D2]">
                   {PIZZA_TOPPINGS.map((top) => (
-                    <div key={top.name} className="flex items-center gap-1.5 bg-[#2E2422] p-2 border border-[#40312E]">
-                      <span className="text-[#D97706] font-bold">•</span>
+                    <div key={top.name} className="flex items-center justify-between bg-[#2E2422] p-2 border border-[#40312E]">
                       <span>{top.name}</span>
+                      <span className="text-[#D97706] font-mono font-bold">+${top.price.toFixed(2)}</span>
                     </div>
                   ))}
                 </div>

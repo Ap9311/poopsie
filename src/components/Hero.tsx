@@ -3,16 +3,17 @@ import { Phone, Award, Utensils, ShieldCheck } from 'lucide-react';
 
 interface HeroProps {
   onOpenCustomPizza: () => void;
+  onGoToMenu: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenCustomPizza }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenCustomPizza, onGoToMenu }) => {
   return (
     <section className="relative bg-[#1C1514] text-[#FBF8F1] overflow-hidden border-b-4 border-[#7A1C1C]">
       {/* Background Image with Dark Scrim Overlay */}
       <div className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity bg-cover bg-center" style={{ backgroundImage: `url('/src/assets/images/poopsies_hero_bar_pizza_1793881043593.jpg')` }} />
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#1C1514] via-[#1C1514]/80 to-[#1C1514]/60" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           {/* Main Hero Copy Column */}
@@ -45,13 +46,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomPizza }) => {
                 <span>Call to Order (781) 826-5282</span>
               </a>
 
-              <a
-                href="#menu"
+              <button
+                onClick={onGoToMenu}
                 className="inline-flex items-center justify-center gap-2 bg-[#2E2422] hover:bg-[#3D302D] text-[#FBF8F1] hover:text-white px-6 py-4 font-display text-lg font-semibold tracking-wider uppercase transition-colors border border-[#4E3D39] text-center"
               >
                 <Utensils className="w-5 h-5 text-[#C5BBAA]" />
-                <span>See the Menu</span>
-              </a>
+                <span>See Full Menu</span>
+              </button>
             </div>
 
             {/* Key Quick Facts Row */}
@@ -91,18 +92,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomPizza }) => {
               <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square overflow-hidden bg-black mb-4 border border-[#3D2926]">
                 <img
                   src="/src/assets/images/poopsies_beauty_pizza_1793881046019.jpg"
-                  alt="Poopsie's Beauty Bar Pizza with sweet sausage, green peppers, onions, and burnt lacy cheddar crust"
+                  alt="Poopsie's Beauty Bar Pizza with diced pepperoni, al dente onions, and burnt lacy cheddar crust"
                   className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display text-xl font-bold text-[#FBF8F1]">THE BEAUTY ($14.25)</h3>
+                  <h3 className="font-display text-xl font-bold text-[#FBF8F1]">THE BEAUTY ($8.75)</h3>
                   <span className="text-xs font-semibold text-[#D97706] bg-[#3B2816] px-2 py-0.5 border border-[#694827]">#1 TOP SELLER</span>
                 </div>
                 <p className="text-xs sm:text-sm text-[#C5BBAA]">
-                  Sweet Italian sausage, onion, and green pepper with extra cheddar cheese blend and dark crispy burnt edges.
+                  Diced pepperoni with al dente onions, extra cheddar cheese blend, and dark crispy burnt edges.
                 </p>
                 <div className="pt-2 flex items-center justify-between border-t border-[#3D2926] text-xs">
                   <span className="text-[#A89A85]">10" Black Steel Pan • Edge-to-Edge</span>
@@ -110,7 +111,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomPizza }) => {
                     onClick={onOpenCustomPizza}
                     className="text-[#D97706] hover:text-[#F59E0B] font-bold uppercase underline underline-offset-4"
                   >
-                    Customize Your Own →
+                    Build Custom Pie →
                   </button>
                 </div>
               </div>

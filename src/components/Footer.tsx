@@ -1,5 +1,6 @@
 import React from 'react';
-import { MapPin, Phone, Mail, ExternalLink, DollarSign } from 'lucide-react';
+import { DIRECTORY_LINKS } from '../data/menuData';
+import { MapPin, Phone, Mail, ExternalLink, DollarSign, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-[#2C1D1A]">
           
           {/* Brand & Summary */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-4 space-y-4">
             <a href="#" className="inline-block">
               <span className="font-display text-3xl font-bold tracking-wider text-[#FBF8F1]">
                 POOPSIE'S
@@ -19,8 +20,8 @@ export const Footer: React.FC = () => {
               </span>
             </a>
             
-            <p className="text-xs sm:text-sm text-[#9E9088] leading-relaxed max-w-md">
-              A 54-year Pembroke tradition. Cash-only tavern serving 10-inch edge-to-edge bar pizzas, half-pound flat-top burgers, and cold beers.
+            <p className="text-xs sm:text-sm text-[#9E9088] leading-relaxed">
+              Standalone, family-owned tavern run by Bob Thompson. Famous 10-inch edge-to-edge bar pizza, pub burgers, and cold draft beer.
             </p>
 
             <div className="inline-flex items-center gap-2 bg-[#281B18] px-3 py-1.5 border border-[#3D2C28] text-xs text-[#FBF8F1]">
@@ -32,7 +33,7 @@ export const Footer: React.FC = () => {
           {/* Contact Details */}
           <div className="md:col-span-4 space-y-3 text-xs sm:text-sm">
             <h4 className="font-display text-base font-bold text-[#FBF8F1] uppercase tracking-wider">
-              Contact & Location
+              Contact & Details
             </h4>
             
             <div className="flex items-start gap-2 text-[#C5BBAA]">
@@ -53,29 +54,36 @@ export const Footer: React.FC = () => {
                 donthompson@poopsies.com
               </a>
             </div>
-          </div>
-
-          {/* Social Links & Hours Quick Look */}
-          <div className="md:col-span-3 space-y-3 text-xs sm:text-sm">
-            <h4 className="font-display text-base font-bold text-[#FBF8F1] uppercase tracking-wider">
-              Follow & Connect
-            </h4>
-            
-            <div>
-              <a
-                href="https://facebook.com/BestBarPizza"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#1B2738] hover:bg-[#25374E] text-[#60A5FA] px-3.5 py-2 font-display text-xs font-bold uppercase tracking-wider transition-colors border border-[#2B3E59]"
-              >
-                <span>facebook.com/BestBarPizza</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
 
             <div className="pt-2 text-xs text-[#8C7B75]">
+              <span>Price Range: <strong>$10–$20 per person</strong></span>
+            </div>
+          </div>
+
+          {/* Directory Links & Social Media */}
+          <div className="md:col-span-4 space-y-3 text-xs sm:text-sm">
+            <h4 className="font-display text-base font-bold text-[#FBF8F1] uppercase tracking-wider">
+              Directories & Local Listings
+            </h4>
+            
+            <div className="flex flex-wrap gap-2 pt-1">
+              {DIRECTORY_LINKS.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-[#241A18] hover:bg-[#382825] text-[#E8E0D2] px-2.5 py-1 text-xs border border-[#3D2C28] transition-colors"
+                >
+                  <span>{link.name}</span>
+                  <ExternalLink className="w-3 h-3 text-[#D97706]" />
+                </a>
+              ))}
+            </div>
+
+            <div className="pt-2 text-[11px] text-[#8C7B75]">
               <span className="block text-[#D97706] font-semibold">Closed Every Monday</span>
-              <span>Tue–Thu 11:30–10 | Fri–Sat 11:30–11 | Sun 12–9</span>
+              <span>Dine-In & Takeout Only • No Reservations • Kids Welcome</span>
             </div>
           </div>
 
@@ -84,13 +92,13 @@ export const Footer: React.FC = () => {
         {/* Bottom Legal Line */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7A6B65] text-center sm:text-left">
           <div>
-            <strong>Standish Pub, Inc.</strong> — Family owned and operated since 1973.
+            <strong>Standish Pub, Inc.</strong> — Family owned and operated by the Thompson family since July 19, 1973.
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">
             <span>Pembroke, MA 02359</span>
             <span>•</span>
-            <span>South Shore Bar Pizza Classic</span>
+            <span>26 Dedicated Employees</span>
           </div>
         </div>
 

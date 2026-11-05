@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { StorySection } from './components/StorySection';
@@ -6,27 +6,85 @@ import { BarPizzaExplainer } from './components/BarPizzaExplainer';
 import { MenuSection } from './components/MenuSection';
 import { VisitSection } from './components/VisitSection';
 import { PressSection } from './components/PressSection';
+import { FAQSection } from './components/FAQSection';
 import { Footer } from './components/Footer';
 import { CustomPizzaModal } from './components/CustomPizzaModal';
 import { Phone, DollarSign } from 'lucide-react';
 
+type ViewMode = 'home' | 'menu' | 'story' | 'visit' | 'faq';
+
 export default function App() {
+  const [activeView, setActiveView] = useState<ViewMode>('home');
   const [isCustomPizzaOpen, setIsCustomPizzaOpen] = useState(false);
+
+  // Sync scroll on view change
+  const handleSelectView = (view: ViewMode) => {
+    setActiveView(view);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="min-h-screen bg-[#FBF8F1] text-[#1C1917] font-sans selection:bg-[#7A1C1C] selection:text-white flex flex-col relative pb-16 sm:pb-0">
       
-      {/* Sticky Header */}
-      <Header onOpenCustomPizza={() => setIsCustomPizzaOpen(true)} />
+      {/* Sticky Header with Navigation View Switcher */}
+      <Header
+        activeView={activeView}
+        onSelectView={handleSelectView}
+        onOpenCustomPizza={() => setIsCustomPizzaOpen(true)}
+      />
 
-      {/* Main Content Flow */}
+      {/* Main View Renderer */}
       <main className="flex-1">
-        <Hero onOpenCustomPizza={() => setIsCustomPizzaOpen(true)} />
-        <BarPizzaExplainer />
-        <StorySection />
-        <MenuSection onOpenCustomPizza={() => setIsCustomPizzaOpen(true)} />
-        <VisitSection />
-        <PressSection />
+        {activeView === 'home' && (
+          <>
+            <Hero
+              onOpenCustomPizza={() => setIsCustomPizzaOpen(true)}
+              onGoToMenu={() => handleSelectView('menu')}
+            />
+            <BarPizzaExplainer />
+            
+            {/* Featured Compact Menu Section */}
+            <MenuSection
+              onOpenCustomPizza={() => setIsCustomPizzaOpen(true)}
+              isCompactView={true}
+              onViewFullMenu={() => handleSelectView('menu')}
+            />
+
+            <StorySection />
+            <VisitSection />
+            <FAQSection />
+            <PressSection />
+          </>
+        )}
+
+        {activeView === 'menu' && (
+          <div className="py-4">
+            <MenuSection
+              onOpenCustomPizza={() => setIsCustomPizzaOpen(true)}
+              isCompactView={false}
+            />
+          </div>
+        )}
+
+        {activeView === 'story' && (
+          <div className="py-4">
+            <StorySection />
+            <BarPizzaExplainer />
+          </div>
+        )}
+
+        {activeView === 'visit' && (
+          <div className="py-4">
+            <VisitSection />
+          </div>
+        )}
+
+        {activeView === 'faq' && (
+          <div className="py-4">
+            <FAQSection />
+            <VisitSection />
+          </div>
+        )}
       </main>
 
       {/* Footer */}
@@ -38,13 +96,13 @@ export default function App() {
         onClose={() => setIsCustomPizzaOpen(false)}
       />
 
-      {/* Floating Sticky Mobile Order Bar (Mobile-first requirement: Phone number always tappable) */}
+      {/* Floating Sticky Mobile Order Bar */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#1C1514] border-t-2 border-[#7A1C1C] px-3 py-2 flex items-center justify-between gap-2 shadow-2xl">
         <div className="flex flex-col text-[10px] text-[#C5BBAA]">
           <span className="font-display text-xs font-bold text-[#D97706] flex items-center gap-1">
             <DollarSign className="w-3 h-3 stroke-[3]" /> CASH ONLY
           </span>
-          <span>Pembroke • Dine-in & Takeout</span>
+          <span>Pembroke • Dine-In & Takeout</span>
         </div>
 
         <a

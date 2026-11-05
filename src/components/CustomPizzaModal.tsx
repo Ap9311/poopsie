@@ -8,29 +8,33 @@ interface CustomPizzaModalProps {
 }
 
 export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onClose }) => {
-  const [sauce, setSauce] = useState('Standard Tangy Tavern Red');
+  const [sauce, setSauce] = useState('Standard Tangy Red');
   const [crustStyle, setCrustStyle] = useState('Extra Lacy Cheddar Rim (Burnt Edge)');
-  const [selectedToppings, setSelectedToppings] = useState<string[]>(['Sweet Italian Sausage', 'Onion', 'Green Pepper']);
+  const [selectedToppings, setSelectedToppings] = useState<{ name: string; price: number }[]>([
+    { name: 'Pepperoni', price: 0.75 },
+    { name: 'Onion', price: 0.50 },
+  ]);
   const [quantity, setQuantity] = useState(1);
   const [presetApplied, setPresetApplied] = useState<string>('The Beauty');
 
   if (!isOpen) return null;
 
-  const BASE_PRICE = 9.75;
-  const TOPPING_PRICE = 1.25;
-  const unitPrice = BASE_PRICE + selectedToppings.length * TOPPING_PRICE;
+  const BASE_PRICE = 7.50;
+  const toppingsCost = selectedToppings.reduce((sum, t) => sum + t.price, 0);
+  const unitPrice = BASE_PRICE + toppingsCost;
   const totalPrice = unitPrice * quantity;
 
-  const toggleTopping = (toppingName: string) => {
+  const toggleTopping = (topping: { name: string; price: number }) => {
     setPresetApplied('');
-    if (selectedToppings.includes(toppingName)) {
-      setSelectedToppings(selectedToppings.filter((t) => t !== toppingName));
+    const exists = selectedToppings.some((t) => t.name === topping.name);
+    if (exists) {
+      setSelectedToppings(selectedToppings.filter((t) => t.name !== topping.name));
     } else {
-      setSelectedToppings([...selectedToppings, toppingName]);
+      setSelectedToppings([...selectedToppings, topping]);
     }
   };
 
-  const applyPreset = (name: string, toppings: string[]) => {
+  const applyPreset = (name: string, toppings: { name: string; price: number }[]) => {
     setPresetApplied(name);
     setSelectedToppings(toppings);
   };
@@ -53,10 +57,10 @@ export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onCl
             <Sparkles className="w-3.5 h-3.5" /> Interactive 10" Bar Pizza Builder
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#1C1514]">
-            Construct Your Custom South Shore Pie
+            Build Your 10" South Shore Bar Pizza
           </h2>
           <p className="text-xs sm:text-sm text-[#52443F]">
-            Edge-to-edge cheese baked in a 10-inch black steel pan. Base cheese $9.75 + $1.25 per topping.
+            10-inch round, edge-to-edge cheese baked in seasoned black steel. Base cheese $7.50 + topping costs.
           </p>
         </div>
 
@@ -65,40 +69,59 @@ export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onCl
           {/* Quick Presets */}
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#7A1C1C] block mb-2">
-              Quick Local Favorites (One-Click Presets)
+              Signature Favorites (One-Click Presets)
             </span>
             <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => applyPreset('The Beauty', ['Sweet Italian Sausage', 'Onion', 'Green Pepper'])}
+                onClick={() =>
+                  applyPreset('The Beauty', [
+                    { name: 'Pepperoni', price: 0.75 },
+                    { name: 'Onion', price: 0.50 },
+                  ])
+                }
                 className={`px-3 py-1.5 text-xs font-display font-bold uppercase tracking-wider border transition-colors ${
                   presetApplied === 'The Beauty'
                     ? 'bg-[#7A1C1C] text-white border-[#581111]'
                     : 'bg-[#F5EFE4] text-[#1C1514] border-[#D5C9B3] hover:border-[#7A1C1C]'
                 }`}
               >
-                ★ The Beauty ($14.25)
+                ★ The Beauty ($8.75)
               </button>
-              
+
               <button
-                onClick={() => applyPreset('House Special', ['Pepperoni', 'Sweet Italian Sausage', 'Ground Beef (Hamburger)', 'Onion', 'Fresh Mushroom', 'Green Pepper'])}
+                onClick={() =>
+                  applyPreset('House Special', [
+                    { name: 'Pepperoni', price: 0.75 },
+                    { name: 'Sausage', price: 0.75 },
+                    { name: 'Onion', price: 0.50 },
+                    { name: 'Mushroom', price: 1.00 },
+                    { name: 'Pepper', price: 0.50 },
+                  ])
+                }
                 className={`px-3 py-1.5 text-xs font-display font-bold uppercase tracking-wider border transition-colors ${
                   presetApplied === 'House Special'
                     ? 'bg-[#7A1C1C] text-white border-[#581111]'
                     : 'bg-[#F5EFE4] text-[#1C1514] border-[#D5C9B3] hover:border-[#7A1C1C]'
                 }`}
               >
-                ★ House Special ($15.50)
+                ★ House Special ($9.75)
               </button>
 
               <button
-                onClick={() => applyPreset('The Sporkie', ['Sweet Italian Sausage', 'Hot Cherry Peppers'])}
+                onClick={() =>
+                  applyPreset('Greek', [
+                    { name: 'Feta', price: 1.25 },
+                    { name: 'Black Olive', price: 0.75 },
+                    { name: 'Onion', price: 0.50 },
+                  ])
+                }
                 className={`px-3 py-1.5 text-xs font-display font-bold uppercase tracking-wider border transition-colors ${
-                  presetApplied === 'The Sporkie'
+                  presetApplied === 'Greek'
                     ? 'bg-[#7A1C1C] text-white border-[#581111]'
                     : 'bg-[#F5EFE4] text-[#1C1514] border-[#D5C9B3] hover:border-[#7A1C1C]'
                 }`}
               >
-                ★ The Sporkie ($13.50)
+                ★ Greek ($10.25)
               </button>
             </div>
           </div>
@@ -130,38 +153,11 @@ export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onCl
             </div>
           </div>
 
-          {/* Sauce Selection */}
-          <div>
-            <label className="text-xs font-bold uppercase tracking-wider text-[#1C1514] block mb-2">
-              Base Sauce
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-              {[
-                'Standard Tangy Tavern Red',
-                'Garlic Butter Oil',
-                'Poopsie Homemade Chili Base',
-              ].map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setSauce(s)}
-                  className={`p-2.5 text-left border font-semibold transition-colors ${
-                    sauce === s
-                      ? 'bg-[#1C1514] text-[#FBF8F1] border-[#1C1514]'
-                      : 'bg-[#FFFDF7] text-[#3D322F] border-[#C8BCAB] hover:border-[#7A1C1C]'
-                  }`}
-                >
-                  {sauce === s && <span className="text-[#D97706] mr-1">✓</span>}
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Toppings Checklist */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold uppercase tracking-wider text-[#1C1514]">
-                Select Toppings (${TOPPING_PRICE.toFixed(2)} each)
+                Select Toppings
               </label>
               <span className="text-xs text-[#7A1C1C] font-semibold">
                 {selectedToppings.length} selected
@@ -170,18 +166,18 @@ export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onCl
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
               {PIZZA_TOPPINGS.map((top) => {
-                const isSelected = selectedToppings.includes(top.name);
+                const isSelected = selectedToppings.some((t) => t.name === top.name);
                 return (
                   <button
                     key={top.name}
-                    onClick={() => toggleTopping(top.name)}
+                    onClick={() => toggleTopping(top)}
                     className={`p-2 text-left border transition-colors flex items-center justify-between ${
                       isSelected
                         ? 'bg-[#7A1C1C] text-white border-[#581111]'
                         : 'bg-[#FFFDF7] text-[#3D322F] border-[#D5C9B3] hover:border-[#7A1C1C]'
                     }`}
                   >
-                    <span>{top.name}</span>
+                    <span>{top.name} (+${top.price.toFixed(2)})</span>
                     {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#D97706] shrink-0" />}
                   </button>
                 );
@@ -215,12 +211,14 @@ export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onCl
           {/* Real-time Order Script Box */}
           <div className="bg-[#1C1514] text-[#FBF8F1] p-4 border border-[#3D2C28] space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#D97706] block">
-              Phone Script (Read when calling):
+              Phone Order Script (Read when calling):
             </span>
             <p className="text-xs sm:text-sm font-sans leading-relaxed text-[#E8E0D2] bg-[#291F1D] p-3 border border-[#3D2C28] italic">
               "Hi! I'd like to order <strong>{quantity}</strong> 10-inch Bar Pizza{quantity > 1 ? 's' : ''} with{' '}
               <strong>
-                {selectedToppings.length > 0 ? selectedToppings.join(', ') : 'Cheese Only'}
+                {selectedToppings.length > 0
+                  ? selectedToppings.map((t) => t.name).join(', ')
+                  : 'Cheese Only'}
               </strong>
               , baked with <strong>{crustStyle}</strong>. Takeout, please!"
             </p>
@@ -247,7 +245,7 @@ export const CustomPizzaModal: React.FC<CustomPizzaModalProps> = ({ isOpen, onCl
             className="w-full sm:w-auto bg-[#7A1C1C] hover:bg-[#962222] text-white px-6 py-3 font-display text-base font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-colors"
           >
             <Phone className="w-4 h-4 text-[#D97706] fill-current" />
-            <span>Call (781) 826-5282 to Order Now</span>
+            <span>Call (781) 826-5282 to Order</span>
           </a>
         </div>
 

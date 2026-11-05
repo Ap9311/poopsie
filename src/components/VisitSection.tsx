@@ -6,16 +6,16 @@ export const VisitSection: React.FC = () => {
     <section id="visit" className="py-16 sm:py-24 bg-[#F5EFE4] border-b border-[#E0D7C6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#7A1C1C]">
+        {/* Header with clear spacing between kicker and main heading */}
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
+          <div className="text-xs font-bold uppercase tracking-widest text-[#7A1C1C] block">
             Find Us in Pembroke, MA
-          </span>
+          </div>
           <h2 className="font-display text-3xl sm:text-5xl font-bold text-[#1C1514] border-double-tavern pb-3 inline-block">
             Hours & Location
           </h2>
-          <p className="text-sm sm:text-base text-[#52443F]">
-            Located right on Church Street (Route 139). Pull up, grab a booth or pick up your takeout.
+          <p className="text-sm sm:text-base text-[#52443F] leading-relaxed">
+            Located right on Church Street (Route 139). Pull up, grab a booth, or call in your takeout order.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ export const VisitSection: React.FC = () => {
                     <MapPin className="w-5 h-5 text-[#D97706]" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#7A1C1C] block">Address</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#7A1C1C] block mb-1">Address</span>
                     <strong className="text-base text-[#1C1514] block">Poopsie's</strong>
                     <address className="not-italic text-sm text-[#4A3E3B] leading-snug">
                       243 Church St # A<br />
@@ -46,7 +46,7 @@ export const VisitSection: React.FC = () => {
                       href="https://maps.google.com/?q=243+Church+St+A,+Pembroke,+MA+02359"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-[#7A1C1C] hover:text-[#962222] mt-1 underline"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#7A1C1C] hover:text-[#962222] mt-2 underline"
                     >
                       <span>Get Driving Directions</span>
                       <ExternalLink className="w-3 h-3" />
@@ -59,7 +59,7 @@ export const VisitSection: React.FC = () => {
                     <Phone className="w-5 h-5 text-[#D97706]" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#7A1C1C] block">Phone Order Line</span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#7A1C1C] block mb-1">Phone Order Line</span>
                     <a
                       href="tel:7818265282"
                       className="text-xl sm:text-2xl font-display font-bold text-[#1C1514] hover:text-[#7A1C1C] transition-colors block"
@@ -108,7 +108,7 @@ export const VisitSection: React.FC = () => {
             {/* Interactive Static Map Placeholder Card */}
             <div className="bg-[#1C1514] text-[#FBF8F1] p-4 border border-[#3D2C28] shadow-md">
               <div className="relative aspect-[16/9] bg-[#2E2422] flex flex-col items-center justify-center p-4 text-center border border-[#4E3D39] overflow-hidden">
-                <MapPin className="w-10 h-10 text-[#D97706] mb-2 animate-bounce" />
+                <MapPin className="w-10 h-10 text-[#D97706] mb-2" />
                 <span className="font-display text-lg font-bold">243 Church St # A, Pembroke</span>
                 <span className="text-xs text-[#C5BBAA] mt-1">Route 139 Pembroke • Free On-Site Parking</span>
                 <a
@@ -138,7 +138,7 @@ export const VisitSection: React.FC = () => {
                 </div>
                 
                 <span className="bg-[#581111] text-[#FBF8F1] text-xs font-display font-bold uppercase px-3 py-1">
-                  Established 1973
+                  Est. 1973
                 </span>
               </div>
 
