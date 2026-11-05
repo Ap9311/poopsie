@@ -1,0 +1,6 @@
+{
+  "name": "Poopsie's - South Shore Bar Pizza",
+  "description": "54-year-old family-run South Shore bar pizza joint in Pembroke, MA. Cash only, no-frills, edge-to-edge tavern pizza since 1973.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

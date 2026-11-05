@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Oswald', sans-serif;
+    --font-sans: 'Source Sans 3', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #FBF8F1;
+    color: #1C1917;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+}
+
+/* Subtle print paper grain effect for vintage tavern menus */
+.bg-tavern-grain {
+  background-color: #FBF8F1;
+  background-image: radial-gradient(#E8E0D2 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+.bg-tavern-dark {
+  background-color: #1C1514;
+  background-image: radial-gradient(#2E2422 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+/* Crisp double rule for vintage menus */
+.border-double-tavern {
+  border-bottom: 3px double #7A1C1C;
+}
+
+.border-double-amber {
+  border-bottom: 3px double #D97706;
+}
+
