@@ -28,7 +28,7 @@ export const StorySection: React.FC = () => {
               <div className="bg-[#1C1514] p-2 border border-[#D5C9B3] shadow-md">
                 <div className="aspect-[4/3] overflow-hidden bg-[#241A18]">
                   <img
-                    src="/src/assets/images/poopsies_pizza_pans_1793881044372.jpg"
+                    src="/assets/images/poopsies_pizza_pans_1793881044372.jpg"
                     alt="Seasoned black steel 10-inch bar pizza pans stacked at Poopsie's"
                     className="w-full h-full object-cover"
                   />
@@ -41,7 +41,7 @@ export const StorySection: React.FC = () => {
               <div className="bg-[#1C1514] p-2 border border-[#D5C9B3] shadow-md">
                 <div className="aspect-[4/3] overflow-hidden bg-[#241A18]">
                   <img
-                    src="/src/assets/images/poopsies_tavern_interior_1793881044863.jpg"
+                    src="/assets/images/poopsies_tavern_interior_1793881044863.jpg"
                     alt="Original booth seating at Poopsie's Pembroke MA tavern"
                     className="w-full h-full object-cover"
                   />
